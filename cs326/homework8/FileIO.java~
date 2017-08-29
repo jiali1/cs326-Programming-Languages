@@ -1,0 +1,45 @@
+import java.io.*; 
+
+public class FileIO
+{
+   public static void read(String colorData[], int rData[], 
+                             int gData[], int bData[]) throws IOException
+   {
+      FileInputStream stream = new FileInputStream("colors.txt");
+      InputStreamReader reader = new InputStreamReader(stream); 
+      StreamTokenizer tokens = new StreamTokenizer(reader);  
+      int counter = 0; 
+
+      while(tokens.nextToken() != tokens.TT_EOF)
+      {
+         colorData[counter] = (String) tokens.sval; 
+         tokens.nextToken();
+         rData[counter] = (int) tokens.nval; 
+         tokens.nextToken(); 
+         gData[counter] = (int) tokens.nval;
+         tokens.nextToken();
+         bData[counter] = (int) tokens.nval; 
+       
+         counter++;
+      }
+
+      stream.close();
+   }
+
+   public static void write(String colorData[], int rData[], 
+                             int gData[], int bData[]) throws IOException
+   {
+      FileOutputStream ostream = new FileOutputStream("colors.txt");
+      PrintWriter writer = new PrintWriter(ostream);  
+      int counter = 0; 
+
+      while(counter < 11)
+      {
+         writer.println(colorData[counter] + " " + rData[counter] +
+                        " " + gData[counter] + " " + bData[counter]);  
+         counter++;
+      }
+
+      ostream.close();
+   }
+}
